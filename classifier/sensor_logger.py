@@ -89,7 +89,7 @@ def predict(window):
     """
     Given a window of accelerometer data, predict the activity label. 
     """
-
+    print ("predict")
     features = extract_features(window)
 
     features_array = np.array(features[1]).reshape(1, -1)
@@ -137,7 +137,7 @@ def update_graph(_counter):
 
         data_accel = [
             go.Scatter(x=list(accel_time), y=list(d), name=name)
-            for d, name in zip([accel_x, accel_y, accel_z], ["X", "Y", "Z"])
+            for d, name in zip([db_freq], ["dBFS"])
         ]
 
         graphs.append(
@@ -150,7 +150,7 @@ def update_graph(_counter):
                             {
                                 "title": "Accelerometer",
                                 "xaxis": {"type": "date", "range": [min(accel_time), max(accel_time)]},
-                                "yaxis": {"title": "Acceleration ms<sup>-2</sup>", "range": [-25, 25]},
+                                "yaxis": {"title": "Acceleration ms<sup>-2</sup>", "range": [-100, 0]},
                             }
                         )
 

@@ -17,7 +17,7 @@ def _compute_mean_features(window):
     """
     Computes the mean x, y and z acceleration over the given window. 
     """
-    # print("mean: ", np.mean(window, axis=0))
+    print("mean: ", np.mean(window, axis=0))
     return np.mean(window, axis=0)
     
 
@@ -25,7 +25,7 @@ def _compute_entropy_features(window):
     """
     Computes the entropy of the x, y and z acceleration over the given window. 
     """
-    mag = np.sqrt(window[:,0]**2 + window[:,1]**2 + window[:,2]**2)
+    mag = np.sqrt(window**2)
     # Compute the histogram of accelerometer values and use it to find the discrete distribution
     hist, bins = np.histogram(mag, bins=10, density=True)
     p = hist * np.diff(bins)
@@ -41,7 +41,7 @@ def _compute_fft_features(window):
     Computes the fft of the x, y and z acceleration over the given window by using the magnitude of the acceleration.
     """
     # compute magnitude of acceleration
-    mag = np.sqrt(window[:,0]**2 + window[:,1]**2 + window[:,2]**2)
+    mag = np.sqrt(window**2)
 
     # Compute the real-valued FFT of the signal
     fft = np.fft.rfft(mag)
@@ -59,7 +59,7 @@ def _compute_peak_count(window):
     Computes the peak count of the magnitude acceleration over the given window. 
     """
     # compute magnitude of acceleration
-    mag = np.sqrt(window[:,0]**2 + window[:,1]**2 + window[:,2]**2)
+    mag = np.sqrt(window**2)
 
     from scipy.signal import find_peaks
 
@@ -102,15 +102,18 @@ def extract_features(window):
     
     x = []
     feature_names = []
+    print(window)
     win = np.array(window)
-    x.append(_compute_mean_features(win[:,0]))
-    feature_names.append("x_mean")
+    print("extracting")
+    # print(_compute_mean_features(win[:,0]))
+    # x.append(_compute_mean_features(win[:,0]))
+    # feature_names.append("x_mean")
 
-    x.append(_compute_mean_features(win[:,1]))
-    feature_names.append("y_mean")
+    # x.append(_compute_mean_features(win[:,1]))
+    # feature_names.append("y_mean")
 
-    x.append(_compute_mean_features(win[:,2]))
-    feature_names.append("z_mean")
+    # x.append(_compute_mean_features(win[:,2]))
+    # feature_names.append("z_mean")
 
     x.append(_compute_entropy_features(win))
     feature_names.append("average_entropy")
