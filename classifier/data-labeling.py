@@ -17,7 +17,7 @@ print(act_labels)
 
 # specify the data files and corresponding activity label
 csv_files = ["data/snore1.csv", "data/ambient1.csv", "data/speech1.csv"]
-activity_list = ["snore", "silent","ambient","speech"]
+activity_list = ["snore","ambient","speech"]
 
 # Specify final output file name. 
 output_filename = "data/all_labeled_data.csv"
