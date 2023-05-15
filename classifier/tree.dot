@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="dominant_freq <= 68.314\nentropy = 1.863\nsamples = 9516\nvalue = [2365, 4134, 1383, 1634]"] ;
+1 [label="dominant_freq <= 1.185\nentropy = 0.911\nsamples = 5548\nvalue = [56, 4100, 1377, 15]"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="dominant_freq <= 1.096\nentropy = 0.281\nsamples = 985\nvalue = [0, 48, 937, 0]"] ;
+1 -> 2 ;
+3 [label="entropy = 0.014\nsamples = 816\nvalue = [0, 1, 815, 0]"] ;
+2 -> 3 ;
+4 [label="entropy = 0.853\nsamples = 169\nvalue = [0, 47, 122, 0]"] ;
+2 -> 4 ;
+5 [label="dominant_freq <= 3.922\nentropy = 0.583\nsamples = 4563\nvalue = [56, 4052, 440, 15]"] ;
+1 -> 5 ;
+6 [label="entropy = 0.896\nsamples = 967\nvalue = [0, 665, 302, 0]"] ;
+5 -> 6 ;
+7 [label="entropy = 0.388\nsamples = 3596\nvalue = [56, 3387, 138, 15]"] ;
+5 -> 7 ;
+8 [label="dominant_freq <= 259.483\nentropy = 1.055\nsamples = 3968\nvalue = [2309, 34, 6, 1619]"] ;
+0 -> 8 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+9 [label="dominant_freq <= 88.993\nentropy = 0.439\nsamples = 1782\nvalue = [1659, 34, 6, 83]"] ;
+8 -> 9 ;
+10 [label="entropy = 1.233\nsamples = 143\nvalue = [103, 24, 6, 10]"] ;
+9 -> 10 ;
+11 [label="entropy = 0.316\nsamples = 1639\nvalue = [1556, 10, 0, 73]"] ;
+9 -> 11 ;
+12 [label="x_mean <= 6.433\nentropy = 0.878\nsamples = 2186\nvalue = [650, 0, 0, 1536]"] ;
+8 -> 12 ;
+13 [label="entropy = 0.976\nsamples = 1531\nvalue = [625, 0, 0, 906]"] ;
+12 -> 13 ;
+14 [label="entropy = 0.234\nsamples = 655\nvalue = [25, 0, 0, 630]"] ;
+12 -> 14 ;
+}
