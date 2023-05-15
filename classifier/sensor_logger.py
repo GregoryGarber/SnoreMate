@@ -12,7 +12,7 @@ import sys
 import pickle
 # make sure features.py is in the same directory
 from features import extract_features
-from util import reorient, reset_vars
+from util import normalize, reset_vars
 import labels
 
 import numpy as np
