@@ -47,6 +47,7 @@ accel_time = deque(maxlen=MAX_DATA_POINTS)
 accel_x = deque(maxlen=MAX_DATA_POINTS)
 accel_y = deque(maxlen=MAX_DATA_POINTS)
 accel_z = deque(maxlen=MAX_DATA_POINTS)
+db_freq = deque(maxlen=MAX_DATA_POINTS)
 
 sensor_data = []
 
@@ -269,6 +270,7 @@ def data():  # listens to the data streamed from the sensor logger
 
             # Read accelerometer sensor data value
             # modify to access different sensors
+            print(sensor_name)
             if (sensor_name == "accelerometer"):
                 ts = datetime.fromtimestamp(d["time"] / 1000000000)
                 if len(accel_time) == 0 or ts > accel_time[-1]:
@@ -297,6 +299,19 @@ def data():  # listens to the data streamed from the sensor logger
 
                     if len(sensor_uncali_data) > MAX_DATA_POINTS:
                         sensor_uncali_data.pop(0)
+
+            if (sensor_name == "microphone"):
+                print("microphone")
+                print(d)
+                ts = datetime.fromtimestamp(d["time"] / 1000000000)
+                if len(accel_time) == 0 or ts > accel_time[-1]:
+                    accel_time.append(ts)
+
+                    db_freq.append(d["values"]["dBFS"])
+                    sensor_data.append(d["values"]["dBFS"])
+                    if len(sensor_data) > MAX_DATA_POINTS:
+                        sensor_data.pop(0)
+
 
     return "success"
 
