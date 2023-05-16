@@ -170,16 +170,16 @@ def extract_features(window):
 
     
 
-    # x.append(_compute_avg(win))
-    # feature_names.append("avg")
+    x.append(_compute_avg(win))
+    feature_names.append("avg")
     print("window")
     print(win)
 
-    x.append(_compute_max(win))
-    feature_names.append("max")
+    # x.append(_compute_max(win))
+    # feature_names.append("max")
 
-    print("max: ")
-    print(_compute_max(win))
+    print("avg: ")
+    print(_compute_avg(win))
 
     x.append(_compute_peak_count(win))
     feature_names.append("peak_count")

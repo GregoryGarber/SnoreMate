@@ -72,7 +72,7 @@ class_names = labels.activity_labels
 # print(class_names)
 
 window_size = 300  # ~1 sec assuming 100 Hz sampling rate
-step_size = 150  # no overlap
+step_size = 300  # no overlap
 index = 0  # to keep track of how many samples we have buffered so far
 reset_vars()  # resets orientation variables
 
