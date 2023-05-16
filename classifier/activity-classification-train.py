@@ -44,10 +44,11 @@ print("Normalizing decibel data...")
 sys.stdout.flush()
 reset_vars()
 normalized = np.asarray([normalize(data[i,2]) for i in range(len(data))])
-normalized_data_with_timestamps = np.append(data[:,0:1],normalized.reshape(-1,1),axis=1)
+normalized_data_with_timestamps = np.append(data[:,0:2],normalized.reshape(-1,1),axis=1)
 data = np.append(normalized_data_with_timestamps, data[:,-1:], axis=1)
 
 data = np.nan_to_num(data)
+
 
 # %%---------------------------------------------------------------------------
 #
@@ -55,8 +56,8 @@ data = np.nan_to_num(data)
 #
 # -----------------------------------------------------------------------------
 
-window_size = 20
-step_size = 20
+window_size = 300
+step_size = 150
 
 print("Extracting features and labels for window size {} and step size {}...".format(window_size, step_size))
 sys.stdout.flush()
@@ -67,6 +68,8 @@ feature_names = []
 for i,window_with_timestamp_and_label in slidingWindow(data, window_size, step_size):
     window = window_with_timestamp_and_label[:,1:-1]
     feature_names, x = extract_features(window)
+    print(x)  # Print the entire feature vector
+
     X.append(x)
     Y.append(window_with_timestamp_and_label[10, -1])
    
