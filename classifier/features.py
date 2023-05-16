@@ -41,14 +41,7 @@ def _compute_fft_features(window):
     Computes the fft of the x, y and z acceleration over the given window by using the magnitude of the acceleration.
     """
     # compute magnitude of acceleration
-    mag = np.sqrt(np.sum(window**2))
-    mag2 = np.linalg.norm(window)
-    print("window: ")
-    print(window)
-    print("mag: ")
-    print(mag2)
-    print(mag2.shape)
-    print(mag2.dtype)
+    
 
     # Compute the real-valued FFT of the signal
     fft = np.fft.rfft(window)
@@ -67,6 +60,11 @@ def _compute_peak_count(window):
     """
     # compute magnitude of acceleration
     mag = np.sqrt(np.sum(window**2))
+    print("window stuff")
+    print(window.shape)
+    if (len(window) > 1):
+        print("hi there")
+        window = np.sqrt(np.sum(window**2))
 
     from scipy.signal import find_peaks
 
@@ -128,8 +126,8 @@ def extract_features(window):
     x.append(_compute_fft_features(win))
     feature_names.append("dominant_freq")
 
-    x.append(_compute_peak_count(win))
-    feature_names.append("peak_count")
+    # x.append(_compute_peak_count(win))
+    # feature_names.append("peak_count")
 
     feature_vector = list(x)
     return feature_names, feature_vector

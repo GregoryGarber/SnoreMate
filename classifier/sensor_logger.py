@@ -71,8 +71,8 @@ last_update_time = time.time()
 class_names = labels.activity_labels
 # print(class_names)
 
-window_size = 100  # ~1 sec assuming 100 Hz sampling rate
-step_size = 100  # no overlap
+window_size = 2048  # ~1 sec assuming 100 Hz sampling rate
+step_size = 1024  # no overlap
 index = 0  # to keep track of how many samples we have buffered so far
 reset_vars()  # resets orientation variables
 
@@ -89,7 +89,8 @@ def predict(window):
     """
     Given a window of accelerometer data, predict the activity label. 
     """
-    print ("predict")
+    print("predicting!! hehe hi sir")
+    print (window.shape)
     features = extract_features(window)
 
     features_array = np.array(features[1]).reshape(1, -1)
@@ -98,7 +99,7 @@ def predict(window):
     prediction = classifier.predict(features_array)
 
     # Get the name of the predicted activity from 'class_names'
-
+    print (class_names)
     return class_names[int(prediction[0])]
 
 
@@ -200,7 +201,8 @@ def update_graph(_counter):
 
     activity = None
 
-    if len(sensor_data) > window_size:
+    if len(sensor_data) > 50:
+        print("prediting bitch")
         activity = predict(np.asarray(sensor_data[-window_size:]))
 
     #######################################################################################################
@@ -270,7 +272,6 @@ def data():  # listens to the data streamed from the sensor logger
 
             # Read accelerometer sensor data value
             # modify to access different sensors
-            print(sensor_name)
             if (sensor_name == "accelerometer"):
                 ts = datetime.fromtimestamp(d["time"] / 1000000000)
                 if len(accel_time) == 0 or ts > accel_time[-1]:
@@ -301,8 +302,6 @@ def data():  # listens to the data streamed from the sensor logger
                         sensor_uncali_data.pop(0)
 
             if (sensor_name == "microphone"):
-                print("microphone")
-                print(d)
                 ts = datetime.fromtimestamp(d["time"] / 1000000000)
                 if len(accel_time) == 0 or ts > accel_time[-1]:
                     accel_time.append(ts)
