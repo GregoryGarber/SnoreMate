@@ -17,8 +17,8 @@ def _compute_mean_features(window):
     """
     Computes the mean x, y and z acceleration over the given window. 
     """
-    print("mean: ", np.mean(window, axis=0))
-    return np.mean(window, axis=0)
+    print("mean: ", np.mean(window))
+    return np.mean(window)
     
 
 def _compute_entropy_features(window):
@@ -61,11 +61,20 @@ def _compute_peak_count(window):
     # compute magnitude of acceleration
     mag = np.sqrt(np.sum(window**2))
     print("window stuff")
-    print(window.shape)
-    if (len(window) > 1):
-        print("hi there")
-        window = np.sqrt(np.sum(window**2))
+    print(window[0].shape)
+    print (window[0].shape == (1,))
+    arr = []
+    for i in range(len(window)):
+        if (window[i].shape == (1,)):
+            print("hi")
+            print(window[i][0])
+            arr.append(window[i][0])
 
+
+    if len(arr) == len(window):
+        window = arr
+
+    print(window)
     from scipy.signal import find_peaks
 
     peaks, _ = find_peaks(window)
@@ -111,8 +120,8 @@ def extract_features(window):
     win = np.array(window)
     print("extracting")
     # print(_compute_mean_features(win[:,0]))
-    # x.append(_compute_mean_features(win[:,0]))
-    # feature_names.append("x_mean")
+    x.append(_compute_mean_features(win))
+    feature_names.append("x_mean")
 
     # x.append(_compute_mean_features(win[:,1]))
     # feature_names.append("y_mean")
@@ -126,8 +135,8 @@ def extract_features(window):
     x.append(_compute_fft_features(win))
     feature_names.append("dominant_freq")
 
-    # x.append(_compute_peak_count(win))
-    # feature_names.append("peak_count")
+    x.append(_compute_peak_count(win))
+    feature_names.append("peak_count")
 
     feature_vector = list(x)
     return feature_names, feature_vector
