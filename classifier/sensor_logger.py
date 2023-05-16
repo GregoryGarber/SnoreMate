@@ -91,9 +91,22 @@ def predict(window):
     """
     print("predicting!! hehe hi sir")
     print (window.shape)
-    features = extract_features(window)
+    arr = []
 
+    for i in range(len(window)):
+        arr.append(window[i] + 70)
+
+    print(arr)
+    features = extract_features(arr)
+
+    print("features: ")
+    print(features[1])
+
+    
     features_array = np.array(features[1]).reshape(1, -1)
+
+    print("features2")
+    print(features_array)
 
     # Make prediction using the classifier
     prediction = classifier.predict(features_array)

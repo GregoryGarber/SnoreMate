@@ -92,6 +92,7 @@ def _compute_peak_count(window):
         #print("hi there")
         window = np.sqrt(np.sum(window**2))
 
+    print(window)
     from scipy.signal import find_peaks
 
     peaks, _ = find_peaks(mag)
