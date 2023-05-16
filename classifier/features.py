@@ -25,7 +25,7 @@ def _compute_entropy_features(window):
     """
     Computes the entropy of the x, y and z acceleration over the given window. 
     """
-    mag = np.sqrt(np.sum(window**2, axis=1))
+    mag = np.sqrt(np.sum(window**2))
     # Compute the histogram of accelerometer values and use it to find the discrete distribution
     hist, bins = np.histogram(mag, bins=10, density=True)
     p = hist * np.diff(bins)
@@ -41,10 +41,17 @@ def _compute_fft_features(window):
     Computes the fft of the x, y and z acceleration over the given window by using the magnitude of the acceleration.
     """
     # compute magnitude of acceleration
-    mag = np.sqrt(np.sum(window**2, axis=1))
+    mag = np.sqrt(np.sum(window**2))
+    mag2 = np.linalg.norm(window)
+    print("window: ")
+    print(window)
+    print("mag: ")
+    print(mag2)
+    print(mag2.shape)
+    print(mag2.dtype)
 
     # Compute the real-valued FFT of the signal
-    fft = np.fft.rfft(mag)
+    fft = np.fft.rfft(window)
 
     # Compute the absolute value of the FFT
     abs_fft = np.abs(fft)
@@ -59,11 +66,11 @@ def _compute_peak_count(window):
     Computes the peak count of the magnitude acceleration over the given window. 
     """
     # compute magnitude of acceleration
-    mag = np.sqrt(np.sum(window**2, axis=1))
+    mag = np.sqrt(np.sum(window**2))
 
     from scipy.signal import find_peaks
 
-    peaks, _ = find_peaks(mag)
+    peaks, _ = find_peaks(window)
 
     # peak count in the window
     peak_count = len(peaks)
