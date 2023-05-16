@@ -71,8 +71,8 @@ last_update_time = time.time()
 class_names = labels.activity_labels
 # print(class_names)
 
-window_size = 2048  # ~1 sec assuming 100 Hz sampling rate
-step_size = 1024  # no overlap
+window_size = 300  # ~1 sec assuming 100 Hz sampling rate
+step_size = 150  # no overlap
 index = 0  # to keep track of how many samples we have buffered so far
 reset_vars()  # resets orientation variables
 
@@ -90,29 +90,22 @@ def predict(window):
     Given a window of accelerometer data, predict the activity label. 
     """
     print("predicting!! hehe hi sir")
-    print (window.shape)
     arr = []
+    print(window)
+    
 
-    for i in range(len(window)):
-        arr.append(window[i] + 70)
-
-    print(arr)
-    features = extract_features(arr)
-
-    print("features: ")
-    print(features[1])
+    features = extract_features(window)
 
     
     features_array = np.array(features[1]).reshape(1, -1)
 
-    print("features2")
-    print(features_array)
 
     # Make prediction using the classifier
     prediction = classifier.predict(features_array)
 
     # Get the name of the predicted activity from 'class_names'
-    print (class_names)
+    print (class_names[int(prediction[0])])
+    print(prediction)
     return class_names[int(prediction[0])]
 
 

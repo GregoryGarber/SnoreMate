@@ -69,6 +69,7 @@ for i,window_with_timestamp_and_label in slidingWindow(data, window_size, step_s
     window = window_with_timestamp_and_label[:,1:-1]
     feature_names, x = extract_features(window)
     print(x)  # Print the entire feature vector
+    print(feature_names)
 
     X.append(x)
     Y.append(window_with_timestamp_and_label[10, -1])
@@ -107,7 +108,7 @@ total_prec = 0
 total_rec = 0
 
 # train the SAME tree over and over (.fit)
-tree = DecisionTreeClassifier(criterion="entropy", max_depth=3)
+tree = DecisionTreeClassifier(max_depth=3)
 
 
 for train_index, test_index in kf.split(X):
@@ -158,7 +159,7 @@ print (f"avg rec: {total_rec / n_folds}")
 #clf.fit(X, Y)
 
 # TODO: Save the decision tree visualization to disk - replace 'tree' with your decision tree and run the below line
-export_graphviz(tree, out_file='tree.dot', feature_names = feature_names)
+export_graphviz(tree, out_file='tree1.dot', feature_names = feature_names)
 
 # TODO: Save the classifier to disk - replace 'tree' with your decision tree and run the below line
 print("saving classifier model...")

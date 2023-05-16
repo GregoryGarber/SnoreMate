@@ -80,29 +80,37 @@ def _compute_peak_count(window):
     Computes the peak count of the magnitude acceleration over the given window. 
     """
     
-    if len(window.shape) == 1:
-        window = window.reshape(-1, 1)
+    
+    
 
+    peaks = 0
+    for i in range(1, len(window) - 1):
+        if window[i].size == 2:
+            if window[i][1] > window[i - 1][1] and window[i][1] > window[i + 1][1]:
+                peaks += 1
+        else:
+            if window[i] > window[i - 1] and window[i] > window[i + 1]:
+                peaks += 1
+    return peaks
 
-    # compute magnitude of acceleration
-    mag = np.sqrt(np.sum(window**2, axis=1))
-    #print("window stuff")
-    #print(window.shape)
-    if (len(window) > 1):
-        #print("hi there")
-        window = np.sqrt(np.sum(window**2))
+def _compute_avg(window):
+    
+    if window[0].size == 2:
+        values = [sub_array[1] for sub_array in window]
+        average = sum(values) / len(values)
 
-    print(window)
-    from scipy.signal import find_peaks
+        return average
+    else:
+        print(sum(window) / len(window))
+        return sum(window) / len(window)
 
-    peaks, _ = find_peaks(mag)
-
-    # peak count in the window
-    peak_count = len(peaks)
-
-    # print("peak count: ", peak_count)
-
-    return peak_count
+def _compute_max(window):
+    
+    if window[0].size == 2:
+        max_value = max(window, key=lambda x: x[1])
+        return max_value[1]
+    else:
+        return max(window)
 
 
 def extract_features(window):
@@ -136,7 +144,7 @@ def extract_features(window):
     feature_names = []
     #print(window)
     win = np.array(window)
-    print("extracting")
+
     # print(_compute_mean_features(win[:,0]))
 
 
@@ -154,14 +162,30 @@ def extract_features(window):
     # x.append(_compute_mean_features(win[:,2]))
     # feature_names.append("z_mean")
 
-    x.append(_compute_entropy_features(win))
-    feature_names.append("average_entropy")
+    # x.append(_compute_entropy_features(win))
+    # feature_names.append("average_entropy")
 
     x.append(_compute_fft_features(win))
     feature_names.append("dominant_freq")
 
+    
+
+    # x.append(_compute_avg(win))
+    # feature_names.append("avg")
+    print("window")
+    print(win)
+
+    x.append(_compute_max(win))
+    feature_names.append("max")
+
+    print("max: ")
+    print(_compute_max(win))
+
     x.append(_compute_peak_count(win))
     feature_names.append("peak_count")
+    
+    
+    
     
     feature_vector = list(x)
     #print(feature_names)
